@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Market Simulator</title>
+<style>
+:root{--bg:#f4f7fb;--card:#ffffff;--line:#d9e2ec;--navy:#0f172a;--blue:#2563eb;--muted:#64748b;--green:#15803d;--red:#b91c1c;--soft:#eff6ff}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:#0f172a}
+header{background:linear-gradient(135deg,#0b1220,#17335f,#2563eb);color:white;padding:28px 22px 22px}
+header h1{margin:0;font-size:30px}
+header p{margin:8px 0 0 0;color:rgba(255,255,255,.88);max-width:760px}
+.badges{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+.badge{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700}
+nav{background:white;border-bottom:1px solid var(--line);padding:12px 18px;display:flex;gap:10px;flex-wrap:wrap;position:sticky;top:0;z-index:20}
+nav a{text-decoration:none;color:var(--navy);font-weight:700;font-size:14px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:white}
+main{max-width:1280px;margin:0 auto;padding:20px}
+section{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:18px;box-shadow:0 8px 24px rgba(15,23,42,.04)}
+h2{margin:0 0 14px 0;font-size:24px}
+h3{margin:0 0 10px 0;font-size:18px}
+.grid2{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.card{background:white;border:1px solid var(--line);border-radius:16px;padding:16px}
+.kpi{background:linear-gradient(180deg,#fff,#f8fbff);border:1px solid var(--line);border-radius:16px;padding:16px}
+.kpi .label,.label{color:var(--muted);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}
+.kpi .value{font-size:30px;font-weight:800;margin-top:6px}
+.kpi .sub{color:var(--muted);font-size:13px;margin-top:6px}
+.small{font-size:13px;color:var(--muted)}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:10px;border-bottom:1px solid #ebf0f5;text-align:left}
+th{background:#f8fbff}
+select,input,textarea{padding:10px 11px;border:1px solid #cfd8e3;border-radius:10px;background:white;font-size:14px}
+button{padding:10px 12px;border:none;border-radius:10px;background:var(--blue);color:white;font-weight:700;cursor:pointer}
+button.secondary{background:white;color:var(--blue);border:1px solid var(--blue)}
+.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin-bottom:12px}
+.pos{color:var(--green);font-weight:800}
+.neg{color:var(--red);font-weight:800}
+.profile{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.metric-box{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fcfdff}
+.metric-box .name{color:var(--muted);font-size:12px;font-weight:800;text-transform:uppercase}
+.metric-box .num{font-size:22px;font-weight:800;margin-top:4px}
+.note{border:1px dashed #bfd3ef;background:var(--soft);border-radius:14px;padding:12px}
+textarea{width:100%;min-height:90px}
+.hero-line{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.tag{display:inline-block;background:var(--soft);color:#24426a;border:1px solid #dbe8ff;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:700;margin-right:6px;margin-bottom:6px}
+.footer{color:var(--muted);font-size:13px;padding:0 4px 24px}
+@media (max-width:900px){.grid2,.grid3,.grid4,.profile{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Stage 1 Market Simulator</h1>
+  <p>A cleaner, more professional classroom investing platform with a dashboard, company explorer, screener, and portfolio builder.</p>
+  <div class="badges">
+    <span class="badge">Upgraded UI</span>
+    <span class="badge">Cleaner dashboard</span>
+    <span class="badge">Company profiles</span>
+    <span class="badge">Portfolio analytics</span>
+  </div>
+</header>
+
+<nav>
+  <a href="#dashboard">Dashboard</a>
+  <a href="#companies">Companies</a>
+  <a href="#screener">Screener</a>
+  <a href="#portfolio">Portfolio</a>
+  <a href="#notes">Instructor Notes</a>
+</nav>
+
+<main>
+  <section id="dashboard">
+    <h2>Market Dashboard</h2>
+    <div class="grid4">
+      <div class="kpi"><div class="label">Benchmark Return</div><div class="value">+11.2%</div><div class="sub">Synthetic class benchmark</div></div>
+      <div class="kpi"><div class="label">Companies</div><div class="value">6</div><div class="sub">Starter pilot universe</div></div>
+      <div class="kpi"><div class="label">Average P/E</div><div class="value">20.5x</div><div class="sub">Across current list</div></div>
+      <div class="kpi"><div class="label">Largest Sector</div><div class="value">Technology</div><div class="sub">Highest current pilot weight</div></div>
+    </div>
+
+    <div class="grid2" style="margin-top:16px;">
+      <div class="card">
+        <h3>How students should use this</h3>
+        <ol>
+          <li>Review the benchmark and company universe.</li>
+          <li>Study valuation, profitability, and business quality.</li>
+          <li>Use the screener to narrow candidates.</li>
+          <li>Build a portfolio and compare it to the benchmark.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>Learning focus</h3>
+        <div class="tag">Diversification</div>
+        <div class="tag">Valuation</div>
+        <div class="tag">Quality</div>
+        <div class="tag">Risk control</div>
+        <div class="tag">Thesis writing</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="companies">
+    <h2>Company Explorer</h2>
+    <div class="grid2">
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Ticker</th><th>Company</th><th>Sector</th><th>P/E</th><th>1Y</th></tr></thead>
+            <tbody>
+              <tr onclick="showCompany('AMDX')"><td><strong>AMDX</strong></td><td>Apex Micro Devices</td><td>Technology</td><td>29x</td><td class="pos">+18%</td></tr>
+              <tr onclick="showCompany('CCNW')"><td><strong>CCNW</strong></td><td>Cobalt Cloud Networks</td><td>Technology</td><td>37x</td><td class="pos">+24%</td></tr>
+              <tr onclick="showCompany('MRTX')"><td><strong>MRTX</strong></td><td>Meridian Therapeutics</td><td>Health Care</td><td>16x</td><td class="pos">+3%</td></tr>
+              <tr onclick="showCompany('UABK')"><td><strong>UABK</strong></td><td>Union Atlantic Bancorp</td><td>Financials</td><td>11x</td><td class="pos">+5%</td></tr>
+              <tr onclick="showCompany('CHBR')"><td><strong>CHBR</strong></td><td>Continental Household Brands</td><td>Consumer Staples</td><td>21x</td><td class="pos">+11%</td></tr>
+              <tr onclick="showCompany('PRIE')"><td><strong>PRIE</strong></td><td>Prairie Integrated Energy</td><td>Energy</td><td>10x</td><td class="pos">+15%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="small" style="margin-top:8px;">Tap a row to load the company profile on the right.</div>
+      </div>
+
+      <div class="card" id="companyProfile">
+        <div class="hero-line">
+          <div>
+            <h3 style="margin-bottom:4px;">Apex Micro Devices</h3>
+            <div class="small" id="companySector">Technology • Semiconductors</div>
+          </div>
+          <div>
+            <span class="tag">Growth</span>
+            <span class="tag">AI theme</span>
+          </div>
+        </div>
+        <p id="companyDesc">Designs high-performance processors and accelerator chips for enterprise and cloud workloads.</p>
+        <div class="profile">
+          <div class="metric-box"><div class="name">Price</div><div class="num" id="cpPrice">$142</div></div>
+          <div class="metric-box"><div class="name">Market Cap</div><div class="num" id="cpCap">$238B</div></div>
+          <div class="metric-box"><div class="name">Revenue</div><div class="num" id="cpRev">$74.2B</div></div>
+          <div class="metric-box"><div class="name">Net Income</div><div class="num" id="cpNi">$15.6B</div></div>
+          <div class="metric-box"><div class="name">P/E</div><div class="num" id="cpPe">29x</div></div>
+          <div class="metric-box"><div class="name">Dividend Yield</div><div class="num" id="cpDiv">0.5%</div></div>
+        </div>
+        <div class="note" style="margin-top:12px;">
+          <strong>Bull case:</strong> <span id="bullCase">Strong chip demand and premium margins.</span><br><br>
+          <strong>Bear case:</strong> <span id="bearCase">Cyclical demand and rich valuation.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="screener">
+    <h2>Simple Screener</h2>
+    <div class="controls">
+      <div><span class="label">Sector</span>
+        <select id="sectorFilter">
+          <option value="All">All</option>
+          <option value="Technology">Technology</option>
+          <option value="Health Care">Health Care</option>
+          <option value="Financials">Financials</option>
+          <option value="Consumer Staples">Consumer Staples</option>
+          <option value="Energy">Energy</option>
+        </select>
+      </div>
+      <div><span class="label">Max P/E</span><input id="peFilter" type="number" value="40"></div>
+      <div><span class="label">Min Return</span><input id="retFilter" type="number" value="-10"></div>
+      <div><button onclick="applyScreener()">Apply</button></div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Ticker</th><th>Company</th><th>Sector</th><th>P/E</th><th>Return</th></tr></thead>
+        <tbody id="screenerResults"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="portfolio">
+    <h2>Portfolio Builder</h2>
+    <div class="grid2">
+      <div class="card">
+        <div class="controls">
+          <div><span class="label">Company</span>
+            <select id="stockSelect">
+              <option value="AMDX">AMDX</option>
+              <option value="CCNW">CCNW</option>
+              <option value="MRTX">MRTX</option>
+              <option value="UABK">UABK</option>
+              <option value="CHBR">CHBR</option>
+              <option value="PRIE">PRIE</option>
+            </select>
+          </div>
+          <div><span class="label">Weight %</span><input id="weight" type="number" placeholder="Weight %"></div>
+          <div><button onclick="addStock()">Add</button></div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Ticker</th><th>Weight</th><th>Action</th></tr></thead>
+            <tbody id="portfolioTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Portfolio Analytics</h3>
+        <div class="profile">
+          <div class="metric-box"><div class="name">Weighted Return</div><div class="num" id="portfolioReturn">—</div></div>
+          <div class="metric-box"><div class="name">Assigned Weight</div><div class="num" id="portfolioWeight">0%</div></div>
+        </div>
+        <div class="note" style="margin-top:12px;">
+          <strong>Student thesis box</strong>
+          <div class="small" style="margin:6px 0 8px;">Require students to explain why they chose the portfolio.</div>
+          <textarea placeholder="Example: I chose AMDX for growth, MRTX for defensive health care exposure, and CHBR for stable cash flow."></textarea>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="notes">
+    <h2>Instructor Notes</h2>
+    <div class="grid3">
+      <div class="card">
+        <h3>Suggested Rules</h3>
+        <ul>
+          <li>Minimum 5 to 8 holdings</li>
+          <li>Maximum 20% in one stock</li>
+          <li>Require written investment thesis</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Suggested Grading</h3>
+        <ul>
+          <li>30% return vs benchmark</li>
+          <li>25% thesis quality</li>
+          <li>20% diversification</li>
+          <li>15% use of financial data</li>
+          <li>10% reflection</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Next Upgrade Path</h3>
+        <ul>
+          <li>More companies</li>
+          <li>Better charts</li>
+          <li>Full statements</li>
+          <li>50-year simulation engine</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">This is an upgraded UI layer. The next version can add richer financial history, index comparison, and semester simulation mode.</div>
+</main>
+
+<script>
+const companies = {
+  AMDX:{name:"Apex Micro Devices",sector:"Technology • Semiconductors",desc:"Designs high-performance processors and accelerator chips for enterprise and cloud workloads.",price:"$142",cap:"$238B",rev:"$74.2B",ni:"$15.6B",pe:"29x",div:"0.5%",bull:"Strong chip demand and premium margins.",bear:"Cyclical demand and rich valuation.",ret:18},
+  CCNW:{name:"Cobalt Cloud Networks",sector:"Technology • Cloud Software",desc:"Enterprise cloud workflow and infrastructure platform with recurring subscription revenue.",price:"$188",cap:"$312B",rev:"$61.5B",ni:"$11.3B",pe:"37x",div:"0.0%",bull:"Sticky recurring revenue and high gross margins.",bear:"Expensive multiple if growth cools.",ret:24},
+  MRTX:{name:"Meridian Therapeutics",sector:"Health Care • Pharma",desc:"Diversified pharmaceutical company with strong cash flow and patent exposure.",price:"$119",cap:"$265B",rev:"$88.0B",ni:"$18.2B",pe:"16x",div:"2.3%",bull:"Cash-rich and reasonably valued.",bear:"Patent cliff may compress growth.",ret:3},
+  UABK:{name:"Union Atlantic Bancorp",sector:"Financials • Banking",desc:"Money-center bank with consumer, commercial, and capital markets operations.",price:"$67",cap:"$198B",rev:"$96.5B",ni:"$21.7B",pe:"11x",div:"3.0%",bull:"Low valuation and diversified earnings streams.",bear:"Credit losses can rise quickly in a downturn.",ret:5},
+  CHBR:{name:"Continental Household Brands",sector:"Consumer Staples • Packaged Goods",desc:"Household and pantry brand owner with resilient free cash flow.",price:"$101",cap:"$118B",rev:"$46.4B",ni:"$6.0B",pe:"21x",div:"2.8%",bull:"Steady demand and dividend growth.",bear:"Volume growth is usually modest.",ret:11},
+  PRIE:{name:"Prairie Integrated Energy",sector:"Energy • Integrated",desc:"Integrated energy and refining company with disciplined capital allocation.",price:"$93",cap:"$154B",rev:"$141.0B",ni:"$12.1B",pe:"10x",div:"4.1%",bull:"Cheap multiple and strong shareholder returns.",bear:"Commodity prices drive earnings swings.",ret:15}
+};
+
+function showCompany(ticker){
+  const c = companies[ticker];
+  document.querySelector("#companyProfile h3").innerText = c.name;
+  document.getElementById("companySector").innerText = c.sector;
+  document.getElementById("companyDesc").innerText = c.desc;
+  document.getElementById("cpPrice").innerText = c.price;
+  document.getElementById("cpCap").innerText = c.cap;
+  document.getElementById("cpRev").innerText = c.rev;
+  document.getElementById("cpNi").innerText = c.ni;
+  document.getElementById("cpPe").innerText = c.pe;
+  document.getElementById("cpDiv").innerText = c.div;
+  document.getElementById("bullCase").innerText = c.bull;
+  document.getElementById("bearCase").innerText = c.bear;
+}
+
+function applyScreener(){
+  const sector = document.getElementById("sectorFilter").value;
+  const maxPE = Number(document.getElementById("peFilter").value);
+  const minRet = Number(document.getElementById("retFilter").value);
+  const body = document.getElementById("screenerResults");
+  body.innerHTML = "";
+  Object.entries(companies).forEach(([ticker, c])=>{
+    const peNum = Number(c.pe.replace("x",""));
+    const sectorName = c.sector.split(" • ")[0];
+    if((sector === "All" || sectorName === sector) && peNum <= maxPE && c.ret >= minRet){
+      body.innerHTML += `<tr><td><strong>${ticker}</strong></td><td>${c.name}</td><td>${sectorName}</td><td>${c.pe}</td><td class="${c.ret>=0?'pos':'neg'}">${c.ret>=0?'+':''}${c.ret}%</td></tr>`;
+    }
+  });
+}
+applyScreener();
+
+let portfolio = [];
+function addStock(){
+  const ticker = document.getElementById("stockSelect").value;
+  const weight = Number(document.getElementById("weight").value);
+  if(!weight) return;
+  portfolio.push({ticker, weight});
+  renderPortfolio();
+}
+function removeStock(index){
+  portfolio.splice(index,1);
+  renderPortfolio();
+}
+function renderPortfolio(){
+  const body = document.getElementById("portfolioTable");
+  body.innerHTML = "";
+  let totalWeight = portfolio.reduce((a,b)=>a+b.weight,0);
+  portfolio.forEach((p, i)=>{
+    body.innerHTML += `<tr><td>${p.ticker}</td><td>${p.weight}%</td><td><button class="secondary" onclick="removeStock(${i})">Remove</button></td></tr>`;
+  });
+  if(totalWeight === 0){
+    document.getElementById("portfolioReturn").innerText = "—";
+    document.getElementById("portfolioWeight").innerText = "0%";
+    return;
+  }
+  let weightedReturn = portfolio.reduce((a,p)=>a + companies[p.ticker].ret * (p.weight/totalWeight), 0);
+  document.getElementById("portfolioReturn").innerText = (weightedReturn>=0?"+":"") + weightedReturn.toFixed(2) + "%";
+  document.getElementById("portfolioWeight").innerText = totalWeight + "%";
+}
+</script>
+</body>
+</html>
